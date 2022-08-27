@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block con %}
+
+  {% for i in d %}
+    {{i}}
+  {% endfor %}
+<form method="post" name="transForm">
+  {% csrf_token %}
+  <div class="row mt-5">
+    <h1>번역기</h1>
+    <div class="col-sm-5 text-end">
+      <div class="text-center mt-3">
+        <textarea class="form-control " name="bf" cols="70" rows="10" placeholder="입력하시오">{{bf}}</textarea>
+      </div>
+    </div>
+    <div class="col-sm-2 text-center" style="margin:auto;">
+      <div class="text-center mt-3">
+        <h6>language 선택</h6>
+        <select class="form-select" name="fr">
+          {% for code, name in ndict.items %}
+            <option value="{{ code }}" {% if fr %}{% if fr == code %} selected {% endif %}{% else %}{% if code == "ko" %} selected {% endif %}{% endif %}>{{name|upper}}</option>
+          {% endfor %}
+        </select>
+        <select class="form-select" name="to">
+          {% for code, name in ndict.items %}
+            <option value="{{ code }}" {% if to %}{% if fr == code %} selected {% endif %}{% else %}{% if code == "en" %} selected {% endif %}{% endif %}>{{name|upper}}</option>
+          {% endfor %}
+        </select>
+        <div class="mt-1 mb-2">
+          <b><button type="button" onclick="check()" class="btn btn-dark mt-3 mb-3" style="width: 100;">번역</button></b>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="text-end mt-3">
+        <textarea cols="70" rows="10" disabled>{{af}}</textarea>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+  function check(){
+    tf = document.transForm;
+    if(!tf.bf.value){
+      alert("번역할 문장을 입력해주세요!");
+    }else if(tf.fr.value == tf.to.value){
+      alert("서로다른 나라 골라주세요~");
+    }else{
+      tf.submit();
+    }
+  }
+</script>
+{% endblock %}

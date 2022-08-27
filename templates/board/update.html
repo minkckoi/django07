@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block con %}
+<!--board/update.html-->
+
+  <h1><b>{{b.subject}}  게시글 수정</b></h1>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3 mt-5">
+      <label class="form-label"><b>SUBJECT</b></label>
+      <input type="text" value="{{b.subject}}" name="su" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label class="form-label"><b>WRITER></b></label>
+      <input type="text" class="form-control" disabled value="{{ b.writer }}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label"><b>CONTENT</b></label>
+      <textarea class="form-control" name="co" style="height:150px;">{{b.content}}</textarea>
+    </div>
+    <div class="text-end mt-3">
+      <button class="btn btn-dark">수정</button>
+    </div>
+  </form>
+{% endblock %}
